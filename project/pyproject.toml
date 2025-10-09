@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "hybrid-strategy"
+version = "0.1.0"
+description = "Hybrid KR Final strategy runtime"
+authors = ["AutoGen <autogen@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+onnxruntime = "1.16.3"
+numpy = "^1.26"
+pyyaml = "^6.0"
+httpx = "^0.25"
+websockets = "^12.0"
+orjson = "^3.9"
+uvloop = "^0.17"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4"
+ruff = "^0.1.8"
+black = "^23.10"
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I", "B", "C90"]
+fix = true
+
+[tool.ruff.lint.isort]
+known-first-party = ["project"]
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
