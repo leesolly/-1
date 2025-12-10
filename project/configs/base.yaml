@@ -1,0 +1,65 @@
+universe:
+  topN_by_turnover: 120
+  candidates_max: 15
+portfolio:
+  dynamic_concurrent:
+    base_range: [3, 5]
+  sector_caps:
+    majors: 0.45
+    alts: 0.35
+  corr_budget: 0.7
+entry:
+  p99_guard_ms: 0.9
+  thresholds:
+    stage1: 0.58
+    stage2: 0.67
+  early_exit:
+    enable: true
+    horizon_ms: 800
+quantile:
+  method: CQR
+  monotonic_enforce: true
+  models:
+    q50: artifacts/student/onnx/q50.onnx
+    q90: artifacts/student/onnx/q90.onnx
+selector:
+  ngboost:
+    distribution: student_t
+    cvar_penalty: 0.25
+  dwell_min: 25
+  abstain_thr: 0.65
+bandit:
+  actions_by_regime:
+    low_vol: 0.03
+    normal: 0.02
+    high_vol: 0.01
+ranker:
+  mode: listwise
+  cost_penalties:
+    slippage_bp: 0.6
+    fee_bp: 0.4
+risk_mode:
+  news:
+    hard_window_min: 15
+  infra:
+    hard_window_min: 5
+  turbo:
+    hard_window_min: 10
+limits:
+  symbol:
+    daily_loss_bp: 120
+  portfolio:
+    daily_loss_bp: 350
+ws_reconcile:
+  seq_gap_max: 250
+  dup_filter: true
+  backoff: [1, 2, 4, 8]
+governance:
+  audit: true
+turbo:
+  overrides:
+    sizing:
+      kelly_cap: 0.45
+    exec:
+      splits: 2
+      dt_ms: 130
